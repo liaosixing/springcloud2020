@@ -1,0 +1,36 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: cloud-strem-rabbit-provider
+  devtools:
+    restart:
+      enabled: true
+  cloud:    stream:      binders:  #在此处配置要绑定的mq的服务信息
+        defaultRabbit: #表示定义的名称 用于bingding整合
+          type: rabbit  #消息主件类型
+          environment:  #设置rabbitmq的相关环境配置
+            spring:  
+              rabbitmq:
+                host: 192.168.1.105
+                port: 5672
+                username: guest
+                password: guest      bindings: #服务的整合处理
+        output:   #这个名字是一个通道的名称  在service的实现类中  注入MessageChannel 要用到这个名称    @Resource private MessageChannel output;
+          destination: studyExchange  #表示使用的rabbitmq的exchange名称为studyExchange
+          content-type: application/json  #设置消息类型，本次为json   如果是文本则设置text/plain
+          binder: defaultRabbit  #绑定的是哪个binder 这个名称就是上面binders定义的名称              
+eureka:
+  instance:
+    instance-id: strem-rabbit-provider8801   #配置服务注册的id
+    prefer-ip-address: true  #是否公开注册服务的地址
+    lease-expiration-duration-in-seconds: 5 
+    lease-renewal-interval-in-seconds: 2   #设置心跳的时间间隔默认为30秒
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka  #配置eureka注册中心的地址
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+     

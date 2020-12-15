@@ -1,0 +1,25 @@
+server:
+  port: 3377
+
+spring:
+  application:
+    name: cloud-nacos-client
+  cloud:    nacos:      discovery:        server-addr: 192.168.1.110:8848,192.168.1.111:8848,192.168.1.112:8848
+      config:        server-addr: 192.168.1.110:8848,192.168.1.111:8848,192.168.1.112:8848
+        file-extension: yml
+        group: PROD_GROUP
+        namespace: 5b597ad7-29b1-4ad0-94ab-ac6a3eabc17f
+        
+# ${prefix}-${spring.profiles.active}.${file-extension}        
+management:
+   endpoints:
+       web:
+         exposure:
+          include: "*"  
+ 
+          
+          
+          
+           
+ 
+     

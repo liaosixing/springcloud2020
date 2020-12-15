@@ -1,0 +1,18 @@
+server:
+  port: 84
+
+spring:  application:    name: nacos-sentinel-order
+  cloud:    nacos:      config:        server-addr: 192.168.1.110:8848,192.168.1.111:8848,192.168.1.112:8848
+      discovery:        server-addr: 192.168.1.110:8848,192.168.1.111:8848,192.168.1.112:8848  
+    sentinel:      transport:        dashboard: localhost:8080  #sentinel 控制台地址
+        port: 8719    #如果8080端口被占用  从8719开始一次加1扫描，直到端口不被占用
+        
+serverApi:
+  paymentServer: http://nacos-sentinel-payemnt            
+        
+            
+management:
+   endpoints:
+       web:
+         exposure:
+          include: "*"
